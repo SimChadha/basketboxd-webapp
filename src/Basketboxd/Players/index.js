@@ -25,7 +25,7 @@ function Players() {
           <div className="card">
             <div className="card-body">
               <p className="card-text">
-                {seasonStat.season}<br/>
+                {seasonStat.season - 1} - {seasonStat.season}<br/>
                 Games: {seasonStat.games}<br/>
                 PTS {seasonStat.PTS / seasonStat.games}<br/>
                 TRB {seasonStat.TRB / seasonStat.games}<br/>

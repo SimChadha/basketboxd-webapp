@@ -1,47 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getPlayerStats } from "../Players/client";
 import axios from "axios";
 import lemickey from './lemickey.jpg';
+import getAllPlayers from "./getAllPlayers";
 
 function Search() {
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
-
   const [searchParams, setSearchParams] = useSearchParams();
   const playerName = searchParams.get("player");
   const year = searchParams.get("year");
-
   const [players, setPlayers] = useState([]);
   const playersBySeasonURL = `${NBA_STATS_API}/playerdata/season/${year}`;
-  const findAllPlayersInSeason = async () => {
-    const response = await axios.get(playersBySeasonURL);
-    setPlayers(response.data.results);
+
+  const navigate = useNavigate();
+
+  const fetchPlayers = async () => {
+    try {
+      setPlayers([]);
+
+      const listOfPlayers = await getAllPlayers(year, 1);
+      const filteredPlayers = listOfPlayers.filter((player) => {
+        return player.player_name.toLowerCase().startsWith(playerName.toLowerCase());
+      });
+      const sortedPlayers = filteredPlayers.slice().sort((a, b) => {
+        const nameA = a.player_name.toLowerCase();
+        const nameB = b.player_name.toLowerCase();
+      
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      setPlayers(sortedPlayers);
+    } catch (error) {
+      console.error("Error fetching players:", error);
+    }
   };
+
   useEffect(() => {
-    findAllPlayersInSeason();
-  }, []);
+    fetchPlayers();
+  }, [year, playerName]);
+
+  const handlePlayerClick = (playerName) => {
+    navigate(`/Players/${encodeURIComponent(playerName)}`);
+  };
 
   return (
     <div>
       <h1>Results for players in {year}: {playerName}</h1>
-      <Link
-                  key={playerName}
-                  to={`/Players/${playerName}`}
-                  className="a"
-                >
-                  {playerName}
-                </Link>
 
       <div className="d-flex flex-row flex-wrap mb-4">
         {players.map((player) => (
-          <div className="card">
+          <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}>
             <img className="card-photo card-img-top" src={lemickey} alt="..." />
             <div className="card-body">
               <p className="card-text">
                 <Link
-                  key={player.player_name}
-                  to={`/Players/${player.player_name}`}
+                  to={`/Players/${encodeURIComponent(player.player_name)}`}
                 >
                   {player.player_name}
                 </Link>
@@ -53,6 +73,6 @@ function Search() {
       </div>
     </div>
   );
-};
+}
 
 export default Search;

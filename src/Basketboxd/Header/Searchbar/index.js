@@ -1,15 +1,19 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Searchbar() {
   const navigate = useNavigate();
-  const [searchPlayer, setSearchPlayer] = useState('');
+  const [searchPlayer, setSearchPlayer] = useState("");
   const [searchYear, setSearchYear] = useState(2023);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate(`/Search?player=${encodeURIComponent(searchPlayer)}&year=${encodeURIComponent(searchYear)}`);
-    setSearchPlayer('');
+    navigate(
+      `/Search?player=${encodeURIComponent(
+        searchPlayer
+      )}&year=${encodeURIComponent(searchYear)}`
+    );
+    setSearchPlayer("");
     setSearchYear(2023);
   };
 
@@ -30,13 +34,20 @@ function Searchbar() {
         value={searchPlayer}
         onChange={handlePlayerChange}
       />
-      <input
-        type="number"
+      <select
         className="form-control"
-        min="2008" max="2023"
         value={searchYear}
         onChange={handleYearChange}
-      />
+      >
+        {Array.from(
+          { length: 2024 - 2006 + 1 },
+          (_, index) => 2006 + index
+        ).map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
       <input type="submit" value="Submit" />
     </form>
   );
