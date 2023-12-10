@@ -13,13 +13,14 @@ function Account() {
   const fetchAccount = async () => {
     const account = await client.account();
     setAccount(account);
+    console.log(`account: ${JSON.stringify(account)}`)
   };
   const save = async () => {
     await client.updateUser(account);
   };
   const signout = async () => {
     await client.signout();
-    navigate("/Basketboxd/signin");
+    navigate("/signin");
   };
   useEffect(() => {
     if (id) {
@@ -52,14 +53,11 @@ function Account() {
             }
           />
           <input
-            value={account.dob}
-            onChange={(e) => setAccount({ ...account, dob: e.target.value })}
-          />
-          <input
             value={account.email}
             onChange={(e) => setAccount({ ...account, email: e.target.value })}
           />
           <select
+            value={account.role}
             onChange={(e) => setAccount({ ...account, role: e.target.value })}
           >
             <option value="USER">User</option>
@@ -67,7 +65,7 @@ function Account() {
           </select>
           <button onClick={save} className="btn btn-primary w-100">Save</button>
           <button onClick={signout} className="btn btn-danger w-100">Signout</button>
-          <Link to="/Basketboxd/admin/users" className="btn btn-warning w-100">
+          <Link to="/admin/users" className="btn btn-warning w-100">
                 Users
             </Link>
         </div>

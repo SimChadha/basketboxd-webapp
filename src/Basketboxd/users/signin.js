@@ -5,8 +5,8 @@ function Signin() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const navigate = useNavigate();
   const signin = async () => {
-    await client.signin(credentials);
-    navigate("/Basketboxd/account");
+    const currentUser = await client.signin(credentials);
+    navigate("/account");
   };
   return (
     <div>
