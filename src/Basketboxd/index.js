@@ -6,6 +6,7 @@ import Home from "./Home/index.js";
 import Search from "./Search/index.js"
 import Players from "./Players/index.js"
 import Header from "./Header/index.js";
+import './index.css';
 
 
 function Basketboxd() {
