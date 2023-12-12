@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { getPlayerStats } from "../Players/client";
-import axios from "axios";
-import lemickey from './lemickey.jpg';
 import getAllPlayers from "./getAllPlayers";
+import teamColors from "../teamColors";
 
 function Search() {
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
@@ -54,14 +52,15 @@ function Search() {
     <div>
       <h1>Results for players in {year}: {playerName}</h1>
 
-      <div className="d-flex flex-row flex-wrap mb-4">
+      <div className="d-flex flex-row flex-wrap mb-4" style={{ marginLeft: '30px', marginRight: '30px'}}>
         {players.map((player) => (
-          <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}>
-            <img className="card-photo card-img-top" src={lemickey} alt="..." />
+          <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}
+          style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
             <div className="card-body">
               <p className="card-text">
                 <Link
                   to={`/Players/${encodeURIComponent(player.player_name)}`}
+                  style={{color: teamColors(player.team).text}}
                 >
                   {player.player_name}
                 </Link>

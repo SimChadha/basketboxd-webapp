@@ -15,7 +15,7 @@ function Header() {
         setAccount(currentUser);
     }, [currentUser]);
     return (
-        <div style={{ display: 'flex' }}>
+        <div className="d-flex align-items-center">
             <Link
                 to={`/`}
                 className={`nav-link`}
@@ -23,9 +23,11 @@ function Header() {
             >
                 Basketboxd
             </Link>
-            <Searchbar />
+            <div className="my-3 mx-auto">
+                <Searchbar />
+            </div>
             {account !== null && (
-                <nav className={`nav`} style={{ marginLeft: 'auto' }}>
+                <nav className={`nav`}>
                     <Link
                         to={`/account`}
                         className={`nav-link`}

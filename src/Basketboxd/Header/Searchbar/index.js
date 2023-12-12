@@ -26,21 +26,23 @@ function Searchbar() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="d-flex align-items-center">
       <input
         type="text"
-        className="form-control w-75"
+        className="form-control me-2"
         placeholder="Search..."
         value={searchPlayer}
+        style={{ width: "400px" }}
         onChange={handlePlayerChange}
       />
       <select
-        className="form-control"
+        className="form-control me-2 text-center"
         value={searchYear}
+        style={{ width: "75px" }}
         onChange={handleYearChange}
       >
         {Array.from(
-          { length: 2024 - 2006 + 1 },
+          { length: 2023 - 2006 + 1 },
           (_, index) => 2006 + index
         ).map((year) => (
           <option key={year} value={year}>
@@ -48,7 +50,11 @@ function Searchbar() {
           </option>
         ))}
       </select>
-      <input type="submit" value="Submit" />
+      <input
+        type="submit"
+        value="Submit"
+        className="btn btn-outline-success"
+      />
     </form>
   );
 }

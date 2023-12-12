@@ -8,6 +8,7 @@ import Players from "./Players/index.js"
 import Header from "./Header/index.js";
 import store from "./store/index.js";
 import { Provider } from "react-redux";
+import './index.css';
 
 
 function Basketboxd() {
