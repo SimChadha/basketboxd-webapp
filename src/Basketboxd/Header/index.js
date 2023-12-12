@@ -5,6 +5,8 @@ import * as client from "../users/client";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as reducer from "../users/userReducer";
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 function Header() {
     const [account, setAccount] = useState(null);
@@ -15,60 +17,74 @@ function Header() {
         setAccount(currentUser);
     }, [currentUser]);
     return (
-        <div className="d-flex align-items-center">
-            <Link
-                to={`/`}
-                className={`nav-link`}
-                style={{ fontSize: '30px' }}
-            >
-                Basketboxd
-            </Link>
-            <div className="my-3 mx-auto">
-                <Searchbar />
-            </div>
-            {account !== null && (
-                <nav className={`nav`}>
-                    <Link
-                        to={`/account`}
-                        className={`nav-link`}
-                        style={{ fontSize: '30px' }}
-                    >
-                        Account
-                    </Link>
-                    <Link
-                        to={`/`}
-                        className={`nav-link`}
-                        style={{ fontSize: '30px' }}
-                        onClick={async () => {
-                            await client.signout();
-                            dispatch(reducer.setCurrentUser(null));
-                            setAccount(null);
-                            navigate("/signin");
-                        }}
-                    >
-                        Sign Out
-                    </Link>
-                </nav>
-            )}
-            {account === null &&
-                <nav className={`nav`} style={{ marginLeft: 'auto' }}>
-                    <Link
-                        to={`/signin`}
-                        className={`nav-link`}
-                        style={{ fontSize: '30px' }}
-                    >
-                        Sign In
-                    </Link>
-                    <Link
-                        to={`/signup`}
-                        className={`nav-link`}
-                        style={{ fontSize: '30px' }}
-                    >
-                        Sign Up
-                    </Link>
-                </nav>
-            }
-        </div>
+        <Navbar collapseOnSelect expand="lg" className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" className="me-2" />
+            <Navbar.Brand class="navbar navbar-light bg-none ms-4">
+                <Nav.Link
+                    href="/"
+                    style={{ fontSize: '30px' }}
+                >
+                    Basketboxd
+                </Nav.Link>
+            </Navbar.Brand>
+            <Nav className="justify-content-end">
+                {account !== null && (
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item">
+                            <Link
+                                to={`/account`}
+                                className={`nav-link`}
+                                style={{ fontSize: '30px' }}
+                            >
+                                Account
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                to={`/`}
+                                className={`nav-link`}
+                                style={{ fontSize: '30px' }}
+                                onClick={async () => {
+                                    await client.signout();
+                                    dispatch(reducer.setCurrentUser(null));
+                                    setAccount(null);
+                                    navigate("/signin");
+                                }}
+                            >
+                                Sign Out
+                            </Link>
+                        </li>
+                    </ul>
+                )}
+                {account === null &&
+                    <ul className="navbar-nav mx-auto me-2">
+                        <li className="nav-item">
+                                <Link
+                                    to={`/signin`}
+                                    className={`nav-link text-primary`}
+                                    style={{ fontSize: '30px' }}
+                                >
+                                    Sign In
+                                </Link>
+                        </li>
+                        <li className="nav-item">
+                                <Link
+                                    to={`/signup`}
+                                    className={`nav-link text-primary`}
+                                    style={{ fontSize: '30px' }}
+                                >
+                                    Sign Up
+                                </Link>
+                        </li>
+                    </ul>
+                }
+            </Nav>
+            <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                <Nav>
+                    <Searchbar />
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar >
     )
 }
 export default Header;
