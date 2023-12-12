@@ -1,22 +1,19 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import * as client from "../users/client";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import * as reducer from "../users/userReducer";
 
 function Header() {
     const [account, setAccount] = useState(null);
-    const fetchAccount = async () => {
-        const account = await client.account();
-        if (typeof account !== 'number') { // if account is not a number, then it is an object
-            setAccount(account);
-        }
-    };
+    const { currentUser } = useSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
-        fetchAccount();
-    });
+        setAccount(currentUser);
+    }, [currentUser]);
     return (
         <div style={{ display: 'flex' }}>
             <Link
@@ -42,6 +39,7 @@ function Header() {
                         style={{ fontSize: '30px' }}
                         onClick={async () => {
                             await client.signout();
+                            dispatch(reducer.setCurrentUser(null));
                             setAccount(null);
                             navigate("/signin");
                         }}

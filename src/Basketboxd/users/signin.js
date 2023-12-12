@@ -1,11 +1,17 @@
 import * as client from "./client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentUser } from "./userReducer";
+
 function Signin() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const signin = async () => {
-    const currentUser = await client.signin(credentials);
+    const userFromClient = await client.signin(credentials);
+    await dispatch(setCurrentUser(userFromClient));
     navigate("/account");
   };
   return (

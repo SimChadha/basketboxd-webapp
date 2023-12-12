@@ -13,7 +13,6 @@ function Account() {
   const fetchAccount = async () => {
     const account = await client.account();
     setAccount(account);
-    console.log(`account: ${JSON.stringify(account)}`)
   };
   const save = async () => {
     await client.updateUser(account);
