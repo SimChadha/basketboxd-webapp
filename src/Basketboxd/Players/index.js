@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import teamColors from "../teamColors";
 import PlayerReviews from "./PlayerReviews";
+import Rating from '@mui/material/Rating';
 
 function Players() {
   const { playerName } = useParams();
@@ -12,6 +13,7 @@ function Players() {
 
   const [playerStats, setPlayerStats] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
+  const [avg, setAvg] = useState();
 
   const findPlayerStats = async () => {
     const response = await axios.get(playerStatsURL);
@@ -97,7 +99,10 @@ function Players() {
                   PTS {careerAverages.PTS}<br />
                   TRB {careerAverages.TRB}<br />
                   AST {careerAverages.AST}<br />
-                  TOV {careerAverages.TOV}
+                  TOV {careerAverages.TOV}<br /><br/>
+                  {avg !== null ? (
+                    <Rating name="read-only" value={avg} readOnly />
+                  ) : null}
                   </p>
                 </div>
               </div>
@@ -105,7 +110,7 @@ function Players() {
       </div>
 
       <div className="row justify-content-center">
-        <PlayerReviews playerName={playerName}/>
+        <PlayerReviews playerName={playerName} newReviewHandler = {(newAvg) => setAvg(newAvg)}/>
       </div>
     </div>
   );

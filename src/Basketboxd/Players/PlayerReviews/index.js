@@ -11,7 +11,8 @@ import {
 } from "react-icons/bs";
 import Table from 'react-bootstrap/Table';
 
-function PlayerReviews(playerName) {
+function PlayerReviews(props) {
+  const { playerName, newReviewHandler } = props;
   const [account, setAccount] = useState(null);
   const { currentUser } = useSelector((state) => state.userReducer);
   useEffect(() => {
@@ -26,10 +27,22 @@ function PlayerReviews(playerName) {
     playerName: playerName,
   });
 
+  function findAverage(reviews) {
+    if (reviews.length === 0) {
+      return null;
+    }
+  
+    const totalRating = reviews.reduce((sum, review) => sum + review.playerRating, 0);
+    const averageRating = totalRating / reviews.length;
+  
+    return averageRating;
+  }
+
   const createReview = async () => {
     try {
       const newReview = await client.createReview({ ...review, playerName: playerName.playerName });
       setPlayerReviews([newReview, ...playerReviews]);
+      newReviewHandler(findAverage(playerReviews));
     } catch (err) {
       console.log(err);
     }
@@ -47,6 +60,7 @@ function PlayerReviews(playerName) {
     try {
       const status = await client.updateReview(review);
       setPlayerReviews(playerReviews.map((r) => (r._id === review._id ? review : r)));
+      newReviewHandler(findAverage(playerReviews));
     } catch (err) {
       console.log(err);
     }
@@ -55,6 +69,7 @@ function PlayerReviews(playerName) {
     try {
       await client.deleteReview(review);
       setPlayerReviews(playerReviews.filter((r) => r._id !== review._id));
+      newReviewHandler(findAverage(playerReviews));
     } catch (err) {
       console.log(err);
     }
@@ -71,6 +86,7 @@ function PlayerReviews(playerName) {
     };
 
     fetchReviews();
+    newReviewHandler(findAverage(playerReviews));
   }, [playerName]);
 
   return (
