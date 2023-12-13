@@ -54,7 +54,7 @@ function Search() {
 
       <div className="d-flex flex-row flex-wrap mb-4" style={{ marginLeft: '30px', marginRight: '30px'}}>
         {players.map((player) => (
-          <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}
+          <div className="card" key={player.player_name + player.team} onClick={() => handlePlayerClick(player.player_name)}
           style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
             <div className="card-body">
               <p className="card-text">

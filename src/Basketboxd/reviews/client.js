@@ -25,6 +25,10 @@ export const findReviewsByPlayerName = async (playerName) => {
   const response = await request.get(`${REVIEWS_API}/playerName/${playerName}`);
   return response.data;
 };
+export const findReviewById = async (reviewId) => {
+  const response = await request.get(`${REVIEWS_API}/id/${reviewId}`);
+  return response.data;
+}
 export const updateReview = async (review) => {
   const response = await request.put(`${REVIEWS_API}/${review._id}`, review);
   return response.data;

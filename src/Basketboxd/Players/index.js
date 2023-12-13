@@ -60,13 +60,13 @@ function Players() {
               value={selectedYear}
             >
               {playerStats.map((seasonStat) => (
-                <option key={seasonStat.season} value={seasonStat.season}>
+                <option key={seasonStat.season + seasonStat.team} value={seasonStat.season}>
                   {seasonStat.season}
                 </option>
               ))}
             </select>
             {filterStatsByYear().map((seasonStat) => (
-              <div key={seasonStat.season} className="card"
+              <div key={seasonStat.season + seasonStat.team} className="card"
               style={{ backgroundColor: teamColors(seasonStat.team).background, color: teamColors(seasonStat.team).text}}>
                 <div className="card-body">
                   <p className="card-text">

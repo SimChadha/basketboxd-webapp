@@ -24,7 +24,7 @@ function Basketboxd() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/account" element={<Account />} />
             <Route path="/account/:username" element={<UserProfile />} />
-            <Route path="/search*" element={<Search />} />
+            <Route path="/search/*" element={<Search />} />
             <Route path="/players/:playerName" element={<Players />} />
           </Routes>
         </div>

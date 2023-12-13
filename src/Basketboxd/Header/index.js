@@ -19,7 +19,7 @@ function Header() {
     return (
         <Navbar collapseOnSelect expand="lg" className="navbar navbar-expand-lg navbar-dark bg-dark">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" className="me-2" />
-            <Navbar.Brand class="navbar navbar-light bg-none ms-4">
+            <Navbar.Brand className="navbar navbar-light bg-none ms-4">
                 <Nav.Link
                     href="/"
                     style={{ fontSize: '30px' }}
