@@ -47,7 +47,7 @@ function TopPlayers() {
         {topScorers.map((player) => (
           <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}
           style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
-            <img src={`../../logos/${teamColors(player.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            <img src={`../../logos/${teamColors(player.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
             <div className="card-body">
               <p className="card-text">
@@ -69,7 +69,7 @@ function TopPlayers() {
         {topAssisters.map((player) => (
           <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}
           style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
-            <img src={`../../logos/${teamColors(player.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            <img src={`../../logos/${teamColors(player.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
             <div className="card-body">
               <p className="card-text">
@@ -91,7 +91,7 @@ function TopPlayers() {
         {topRebounders.map((player) => (
           <div className="card" key={player.player_name} onClick={() => handlePlayerClick(player.player_name)}
           style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
-            <img src={`../../logos/${teamColors(player.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            <img src={`../../logos/${teamColors(player.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
             <div className="card-body">
               <p className="card-text">

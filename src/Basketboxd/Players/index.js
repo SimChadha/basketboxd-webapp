@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import teamColors from "../teamColors";
 import PlayerReviews from "./PlayerReviews";
+
 function Players() {
   const { playerName } = useParams();
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
@@ -46,8 +47,6 @@ function Players() {
 
   const careerAverages = calculateCareerAverages();
 
-  const getTeamColors = teamColors();
-
   return (
     <div className="container">
       <h1 className="text-center">{playerName}</h1>
@@ -68,7 +67,7 @@ function Players() {
             {filterStatsByYear().map((seasonStat) => (
               <div key={seasonStat.season + seasonStat.team} className="card"
               style={{ backgroundColor: teamColors(seasonStat.team).background, color: teamColors(seasonStat.team).text}}>
-                <img src={`../../logos/${teamColors(seasonStat.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+                <img src={`../../logos/${teamColors(seasonStat.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
                 <div className="card-body">
                   <p className="card-text">

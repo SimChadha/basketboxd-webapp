@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as client from "../../reviews/client";
 import { Link } from "react-router-dom";
-import { Rating } from "@mui/material";
+import Rating from '@mui/material/Rating';
 import {
   BsFillCheckCircleFill,
   BsTrash3Fill,
@@ -97,21 +97,12 @@ function PlayerReviews(playerName) {
                   />
                 </td>
                 <td>
-                  <input
-                    value={review.playerRating}
-                    className="form-control"
-                    placeholder="Player Rating"
-                    type="number"
-                    min="0"
-                    max="5"
-                    onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
-                  />
-                  <Rating>
-                    value={review.playerRating}
-                    defaultValue={0} 
-                    precision={0.5}
-                    onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
-                  </Rating>
+                <Rating
+                  value={review.playerRating}
+                  defaultValue={0} 
+                  precision={0.5}
+                  onChange={(event, newValue) => setReview({ ...review, playerRating: newValue })}
+                />
                 </td>
                 <td>
                   <BsPlusCircleFill
