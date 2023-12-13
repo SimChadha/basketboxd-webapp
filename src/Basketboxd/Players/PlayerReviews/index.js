@@ -162,12 +162,16 @@ function PlayerReviews(props) {
               <td>{review.review}</td>
               <td>{review.playerRating}</td>
               <td>
-                <button className="btn btn-warning me-2">
+                (currentUser?._id === review.userId ? (
+                  <button className="btn btn-warning me-2">
                   <BsPencil onClick={() => selectReview(review)} />
-                </button>
-                <button className="btn btn-danger me-2">
+                  </button>
+                ) : null)
+                ((currentUser?._id === review.userId) || (currentUser.role === "ADMIN") ? (
+                  <button className="btn btn-danger me-2">
                   <BsTrash3Fill onClick={() => deleteReview(review)} />
-                </button>
+                  </button>
+                ))
               </td>
             </tr>
           ))}

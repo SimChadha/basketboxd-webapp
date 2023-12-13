@@ -110,7 +110,7 @@ function Players() {
       </div>
 
       <div className="row justify-content-center">
-        <PlayerReviews playerName={playerName} newReviewHandler = {(newAvg) => setAvg(newAvg)}/>
+        <PlayerReviews playerName={playerName} newReviewHandler={(newAvg) => setAvg(newAvg)} />
       </div>
     </div>
   );
