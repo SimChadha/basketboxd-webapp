@@ -2,8 +2,11 @@ import * as client from "./client";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import * as reducer from "./userReducer";
 function Account() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [account, setAccount] = useState(null);
   const findUserById = async (id) => {
     const user = await client.findUserById(id);
@@ -19,6 +22,8 @@ function Account() {
   };
   const signout = async () => {
     await client.signout();
+    dispatch(reducer.setCurrentUser(null));
+    setAccount(null);
     navigate("/signin");
   };
   useEffect(() => {
@@ -79,7 +84,7 @@ function Account() {
                 onChange={(e) => setAccount({ ...account, role: e.target.value })}
               >
                 <option value="USER">User</option>
-                <option value="ADMIN">Admin</option>
+                {account.role === "ADMIN" && <option value="ADMIN">Admin</option>}
               </select>
               <button onClick={save} className="btn btn-primary w-100 mb-1">Save</button>
               <button onClick={signout} className="btn btn-danger w-100 mb-1">Signout</button>
