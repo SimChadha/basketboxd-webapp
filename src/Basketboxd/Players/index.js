@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import teamColors from "../teamColors";
+import PlayerReviews from "./PlayerReviews";
 function Players() {
   const { playerName } = useParams();
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
@@ -100,6 +101,10 @@ function Players() {
                 </div>
               </div>
         </div>
+      </div>
+
+      <div className="row justify-content-center">
+        <PlayerReviews playerName={playerName}/>
       </div>
     </div>
   );
