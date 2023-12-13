@@ -68,6 +68,8 @@ function Players() {
             {filterStatsByYear().map((seasonStat) => (
               <div key={seasonStat.season + seasonStat.team} className="card"
               style={{ backgroundColor: teamColors(seasonStat.team).background, color: teamColors(seasonStat.team).text}}>
+                <img src={`../../logos/${teamColors(seasonStat.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            style={{ width: '75px', height: '75px' }}></img>
                 <div className="card-body">
                   <p className="card-text">
                     {teamName(seasonStat.team)}

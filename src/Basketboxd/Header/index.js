@@ -22,9 +22,9 @@ function Header() {
             <Navbar.Brand className="navbar navbar-light bg-none ms-4">
                 <Nav.Link
                     href="/"
-                    style={{ fontSize: '30px' }}
+                    style={{ fontSize: '30px', color: "white", fontFamily: 'Trebuchet MS, sans-serif' }}
                 >
-                    Basketboxd
+                    Basketboxd🏀
                 </Nav.Link>
             </Navbar.Brand>
             <Nav className="justify-content-end">

@@ -52,10 +52,12 @@ function Search() {
     <div>
       <h1>Results for players in {year}: {playerName}</h1>
 
-      <div className="d-flex flex-row flex-wrap mb-4" style={{ marginLeft: '30px', marginRight: '30px'}}>
+      <div className="d-flex flex-row justify-content-center flex-wrap mb-4" style={{ marginLeft: '30px', marginRight: '30px'}}>
         {players.map((player) => (
           <div className="card" key={player.player_name + player.team} onClick={() => handlePlayerClick(player.player_name)}
-          style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text}}>
+          style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text, margin: '5px'}}>
+            <img src={`../../logos/${teamColors(player.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            style={{ width: '75px', height: '75px' }}></img>
             <div className="card-body">
               <p className="card-text">
                 <Link
