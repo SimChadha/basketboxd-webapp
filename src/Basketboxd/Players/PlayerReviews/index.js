@@ -34,13 +34,12 @@ function PlayerReviews(playerName) {
   };
 
   const selectReview = async (review) => {
-    // need to check on this, requires user._id and playername for edits, or we make a find review by id call.
-        try {
-          //const r = await client.???
-          //setReview(r);
-        } catch (err) {
-          console.log(err);
-        }
+    try {
+      const r = await client.findReviewById(review._id);
+      setReview(r);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const updateReview = async () => {
     try {
