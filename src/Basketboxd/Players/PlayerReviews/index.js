@@ -9,6 +9,7 @@ import {
   BsPencil,
   BsPlusCircleFill,
 } from "react-icons/bs";
+import Table from 'react-bootstrap/Table';
 
 function PlayerReviews(playerName) {
   const [account, setAccount] = useState(null);
@@ -74,50 +75,76 @@ function PlayerReviews(playerName) {
 
   return (
     <div>
+      <Table responsive>
+        {currentUser !== null &&
+          <div className="table">
+            <thead>
+              <tr>
+                <th scope="col">Review Text</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    value={review.review}
+                    className="form-control"
+                    placeholder="Review description"
+                    type="longtext"
+                    onChange={(e) => setReview({ ...review, review: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <input
+                    value={review.playerRating}
+                    className="form-control"
+                    placeholder="Player Rating"
+                    type="number"
+                    min="0"
+                    max="5"
+                    onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
+                  />
+                  <Rating>
+                    value={review.playerRating}
+                    defaultValue={0} 
+                    precision={0.5}
+                    onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
+                  </Rating>
+                </td>
+                <td>
+                  <BsPlusCircleFill
+                    onClick={createReview}
+                    className="text-primary fs-1 text"
+                    title="Create new review"
+                  />
+                  <BsFillCheckCircleFill
+                    onClick={updateReview}
+                    title="Save current review selection"
+                    className="text-success fs-1 text"
+                  />
+                  <BsTrash3Fill
+                    onClick={() => setReview({ playerRating: 0, userId: currentUser?._id, playerName: playerName.playerName })}
+                    title="Clear current review selection"
+                    className="me-2 text-danger fs-1 text"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </div>
+        }
+      </Table >
       <table className="table">
         <thead>
           <tr>
+            <th scope="col">User</th>
             <th scope="col">Review</th>
             <th scope="col">Rating</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {currentUser !== null &&
-            <tr>
-              <td>
-                <input
-                  value={review.review}
-                  placeholder="Review description"
-                  type="longtext"
-                  onChange={(e) => setReview({ ...review, review: e.target.value })}
-                />
-                <input
-                  value={review.playerRating}
-                  placeholder="Player Rating"
-                  type="number"
-                  min="0"
-                  max="5"
-                  onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
-                />
-                <Rating>
-                  value={review.playerRating}
-                  defaultValue={0} 
-                  precision={0.5}
-                  onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
-                </Rating>
-              </td>
-              <td>
-                <BsPlusCircleFill
-                  onClick={createReview}
-                  className="text-primary fs-1 text"
-                />
-                <BsFillCheckCircleFill
-                  onClick={updateReview}
-                  className="me-2 text-success fs-1 text"
-                />
-              </td>
-            </tr>
-          }
           {playerReviews.map((review) => (
             <tr key={review._id}>
               <td>
@@ -139,7 +166,7 @@ function PlayerReviews(playerName) {
           ))}
         </tbody>
       </table>
-    </div>
+    </div >
   )
 
 }

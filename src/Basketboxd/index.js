@@ -7,6 +7,7 @@ import Home from "./Home/index.js";
 import Search from "./Search/index.js"
 import Players from "./Players/index.js"
 import Header from "./Header/index.js";
+import UserTable from "./users/table.js";
 import store from "./store/index.js";
 import { Provider } from "react-redux";
 import './index.css';
@@ -25,6 +26,7 @@ function Basketboxd() {
             <Route path="/account" element={<Account />} />
             <Route path="/account/:username" element={<UserProfile />} />
             <Route path="/search/*" element={<Search />} />
+            <Route path="/admin/users" element={<UserTable />} />
             <Route path="/players/:playerName" element={<Players />} />
           </Routes>
         </div>
