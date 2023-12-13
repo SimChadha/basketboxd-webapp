@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import * as client from "../../reviews/client";
 import { Link } from "react-router-dom";
 import {
-    BsFillCheckCircleFill,
-    BsTrash3Fill,
-    BsPencil,
-    BsPlusCircleFill,
-  } from "react-icons/bs";
+  BsFillCheckCircleFill,
+  BsTrash3Fill,
+  BsPencil,
+  BsPlusCircleFill,
+} from "react-icons/bs";
 
 function PlayerReviews(playerName) {
   const [account, setAccount] = useState(null);
@@ -26,7 +26,7 @@ function PlayerReviews(playerName) {
 
   const createReview = async () => {
     try {
-      const newReview = await client.createReview(review);
+      const newReview = await client.createReview({ ...review, playerName: playerName.playerName });
       setPlayerReviews([newReview, ...playerReviews]);
     } catch (err) {
       console.log(err);
@@ -35,12 +35,12 @@ function PlayerReviews(playerName) {
 
   const selectReview = async (review) => {
     // need to check on this, requires user._id and playername for edits, or we make a find review by id call.
-        try {
-          //const r = await client.???
-          //setReview(r);
-        } catch (err) {
-          console.log(err);
-        }
+    try {
+      //const r = await client.???
+      //setReview(r);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const updateReview = async () => {
     try {
@@ -62,7 +62,7 @@ function PlayerReviews(playerName) {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const reviews = await client.findReviewsByPlayerName(playerName);
+        const reviews = await client.findReviewsByPlayerName(playerName.playerName);
         setPlayerReviews(reviews);
       } catch (error) {
         console.error("Error fetching player reviews:", error);
@@ -74,42 +74,50 @@ function PlayerReviews(playerName) {
 
   return (
     <div>
-        <table className="table">
+      <table className="table">
         <thead>
           <tr>
-            <th>Review</th>
-            <th>Rating</th>
-          </tr>
-          <tr>
-            <td>
-              <input
-                value={review.review}
-                onChange={(e) => setReview({ ...review, review: e.target.value })}
-              />
-              <input
-                value={review.playerRating}
-                onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
-              />
-            </td>
-            <td>
-              <BsPlusCircleFill
-                onClick={createReview}
-                className="text-primary fs-1 text"
-              />
-              <BsFillCheckCircleFill
-                onClick={updateReview}
-                className="me-2 text-success fs-1 text"
-              />
-            </td>
+            <th scope="col">Review</th>
+            <th scope="col">Rating</th>
           </tr>
         </thead>
         <tbody>
+          {currentUser !== null &&
+            <tr>
+              <td>
+                <input
+                  value={review.review}
+                  placeholder="Review description"
+                  type="longtext"
+                  onChange={(e) => setReview({ ...review, review: e.target.value })}
+                />
+                <input
+                  value={review.playerRating}
+                  placeholder="Player Rating"
+                  type="number"
+                  min="0"
+                  max="5"
+                  onChange={(e) => setReview({ ...review, playerRating: e.target.value })}
+                />
+              </td>
+              <td>
+                <BsPlusCircleFill
+                  onClick={createReview}
+                  className="text-primary fs-1 text"
+                />
+                <BsFillCheckCircleFill
+                  onClick={updateReview}
+                  className="me-2 text-success fs-1 text"
+                />
+              </td>
+            </tr>
+          }
           {playerReviews.map((review) => (
             <tr key={review._id}>
               <td>
-              <Link to={`/Basketboxd/account/${review.userId}`}>
-                {review.userId}
-              </Link>
+                <Link to={`/Basketboxd/account/${review.userId}`}>
+                  {review.userId}
+                </Link>
               </td>
               <td>{review.review}</td>
               <td>{review.playerRating}</td>
