@@ -115,7 +115,7 @@ function Players() {
                   AST {careerAverages.AST}<br />
                   TOV {careerAverages.TOV}<br /><br/>
                   {avg !== null ? (
-                    <Rating name="read-only" value={avg} readOnly />
+                    <Rating name="read-only" value={avg} precision={0.5} readOnly />
                   ) : null}
                   </p>
                 </div>
