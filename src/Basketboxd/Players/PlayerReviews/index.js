@@ -91,7 +91,7 @@ function PlayerReviews(props) {
           playerName
         );
         setPlayerReviews(reviews);
-        newReviewHandler(findAverage(playerReviews));
+        newReviewHandler(findAverage(reviews));
       } catch (error) {
         console.error("Error fetching player reviews:", error);
       }

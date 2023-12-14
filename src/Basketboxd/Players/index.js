@@ -14,7 +14,7 @@ function Players() {
   const [queryLoaded, setQueryLoaded] = useState(false);
   const [playerStats, setPlayerStats] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
-  const [avg, setAvg] = useState();
+  const [avg, setAvg] = useState(0);
 
   const findPlayerStats = async () => {
     setQueryLoaded(false);
@@ -115,7 +115,10 @@ function Players() {
                   AST {careerAverages.AST}<br />
                   TOV {careerAverages.TOV}<br /><br/>
                   {avg !== null ? (
+                    <>
+                    Average Rating <br/>
                     <Rating name="read-only" value={avg} readOnly />
+                    </>
                   ) : null}
                   </p>
                 </div>
@@ -124,7 +127,7 @@ function Players() {
       </div>
 
       <div className="row justify-content-center">
-        <PlayerReviews playerName={playerName} newReviewHandler={(newAvg) => setAvg(newAvg)} />
+        <PlayerReviews playerName={playerName} newReviewHandler={(newAvg) => {console.log("Inside w/ avg ", newAvg);setAvg(newAvg)}} />
       </div>
     </div>
   );
