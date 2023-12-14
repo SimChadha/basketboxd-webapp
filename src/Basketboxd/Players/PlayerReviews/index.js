@@ -28,7 +28,6 @@ function PlayerReviews(props) {
     playerName: playerName,
   });
 
-  let idToUsernameMap = {};
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -36,12 +35,6 @@ function PlayerReviews(props) {
           playerName
         );
         setPlayerReviews(reviews);
-
-        // Fetch usernames for userIds
-        for (const review of reviews) {
-          const userId = review.userId;
-          idToUsernameMap[userId] = (await userClient.findUserById(userId)).username;
-        }
 
         // Calculate and send the average rating
         const averageRating = calculateAverageRating(reviews);
@@ -121,6 +114,15 @@ function PlayerReviews(props) {
     }
   };
 
+  const getUsername = async (userId) => {
+    try {
+      const response = await userClient.findUserById(userId);
+      return response.username;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="row justify-content-center" style={{ marginTop: "12px" }}>
       {currentUser !== null && (
@@ -196,7 +198,7 @@ function PlayerReviews(props) {
             <tr key={review._id}>
               <td>
                 <Link to={`/account/${review.userId}`}>
-                  {review.userId}
+                  {getUsername(review.userId)}
                 </Link>
               </td>
               <td>{review.review}</td>
