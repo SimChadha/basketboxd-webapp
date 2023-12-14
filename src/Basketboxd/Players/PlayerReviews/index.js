@@ -84,7 +84,6 @@ function PlayerReviews(props) {
     }
   };
 
-  let idToUsernameMap = {};
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -92,12 +91,6 @@ function PlayerReviews(props) {
           playerName
         );
         setPlayerReviews(reviews);
-        console.log("Player reviews:", playerReviews)
-        Object.keys(playerReviews).forEach(async (reviewIndex) => {
-          const userId = playerReviews[reviewIndex].userId
-          idToUsernameMap[`${userId}`] = (await userClient.findUserById(userId)).username;
-          console.log("UserId: " + userId + " Username: " + idToUsernameMap[`${userId}`])
-        });
       } catch (error) {
         console.error("Error fetching player reviews:", error);
       }
@@ -174,14 +167,14 @@ function PlayerReviews(props) {
             <th scope="col">User</th>
             <th scope="col">Review</th>
             <th scope="col">Rating</th>
-            {(currentUser?.role === "ADMIN") && <th scope="col">Actions</th>}
+            {(currentUser !== null) && <th scope="col">Actions</th>}
           </tr>
         </thead>
         <tbody>
           {playerReviews.map((review) => (
             <tr key={review._id}>
               <td>
-                <Link to={`/account/${idToUsernameMap[review.userId]}`}>
+                <Link to={`/account/${review.userId}`}>
                   {review.userId}
                 </Link>
               </td>
