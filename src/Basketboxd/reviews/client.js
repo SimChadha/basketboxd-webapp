@@ -22,6 +22,7 @@ export const findReviewsByUsername = async (username) => {
   return response.data;
 };
 export const findReviewsByPlayerName = async (playerName) => {
+  console.log("Finding reviews by player name" + playerName)
   const response = await request.get(`${REVIEWS_API}/playerName/${playerName}`);
   return response.data;
 };
