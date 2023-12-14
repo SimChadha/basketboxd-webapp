@@ -5,17 +5,13 @@ import { useSelector } from "react-redux";
 
 function Home() {
 
-  const [account, setAccount] = useState(null);
   const { currentUser } = useSelector((state) => state.userReducer);
-  useEffect(() => {
-    setAccount(currentUser);
-  }, [currentUser]);
 
   return (
     <div>
-        ({account} !== null && (
+        {currentUser !== null && (
           <h3>Welcome {currentUser?.username}!</h3>
-        ))
+        )}
         <h1>Top Players for 2022-2023</h1>
         <TopPlayers />
     </div>
