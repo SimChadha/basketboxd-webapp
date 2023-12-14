@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as client from "../../reviews/client";
+import * as userClient from "../../users/client";
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
 import {
@@ -60,11 +61,17 @@ function PlayerReviews(playerName) {
     }
   };
 
+  let idToUsernameMap = {};
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const reviews = await client.findReviewsByPlayerName(playerName.playerName);
         setPlayerReviews(reviews);
+        console.log("Player reviews:", playerReviews)
+        Object.keys(playerReviews).forEach(async (reviewIndex) => {
+          const userId = playerReviews[reviewIndex].userId
+          idToUsernameMap[`${userId}`] = (await userClient.findUserById(userId)).username;
+        });
       } catch (error) {
         console.error("Error fetching player reviews:", error);
       }
@@ -148,7 +155,7 @@ function PlayerReviews(playerName) {
           {playerReviews.map((review) => (
             <tr key={review._id}>
               <td>
-                <Link to={`/Basketboxd/account/${review.userId}`}>
+                <Link to={`/account/${idToUsernameMap[review.userId]}`}>
                   {review.userId}
                 </Link>
               </td>
