@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as client from "../../reviews/client";
 import { Link } from "react-router-dom";
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating";
 import {
   BsFillCheckCircleFill,
   BsTrash3Fill,
   BsPencil,
   BsPlusCircleFill,
 } from "react-icons/bs";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 
 function PlayerReviews(props) {
   const { playerName, newReviewHandler } = props;
@@ -31,16 +31,22 @@ function PlayerReviews(props) {
     if (reviews.length === 0) {
       return null;
     }
-  
-    const totalRating = reviews.reduce((sum, review) => sum + review.playerRating, 0);
+
+    const totalRating = reviews.reduce(
+      (sum, review) => sum + review.playerRating,
+      0
+    );
     const averageRating = totalRating / reviews.length;
-  
+
     return averageRating;
   }
 
   const createReview = async () => {
     try {
-      const newReview = await client.createReview({ ...review, playerName: playerName.playerName });
+      const newReview = await client.createReview({
+        ...review,
+        playerName: playerName.playerName,
+      });
       setPlayerReviews([newReview, ...playerReviews]);
       newReviewHandler(findAverage(playerReviews));
     } catch (err) {
@@ -59,7 +65,9 @@ function PlayerReviews(props) {
   const updateReview = async () => {
     try {
       const status = await client.updateReview(review);
-      setPlayerReviews(playerReviews.map((r) => (r._id === review._id ? review : r)));
+      setPlayerReviews(
+        playerReviews.map((r) => (r._id === review._id ? review : r))
+      );
       newReviewHandler(findAverage(playerReviews));
     } catch (err) {
       console.log(err);
@@ -78,7 +86,9 @@ function PlayerReviews(props) {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const reviews = await client.findReviewsByPlayerName(playerName.playerName);
+        const reviews = await client.findReviewsByPlayerName(
+          playerName.playerName
+        );
         setPlayerReviews(reviews);
       } catch (error) {
         console.error("Error fetching player reviews:", error);
@@ -90,59 +100,67 @@ function PlayerReviews(props) {
   }, [playerName]);
 
   return (
-    <div>
-      <Table responsive>
-        {currentUser !== null &&
-          <div className="table">
-            <thead>
-              <tr>
-                <th scope="col">Review Text</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input
-                    value={review.review}
-                    className="form-control"
-                    placeholder="Review description"
-                    type="longtext"
-                    onChange={(e) => setReview({ ...review, review: e.target.value })}
-                  />
-                </td>
-                <td>
+    <div className="row justify-content-center" style={{ marginTop: "12px" }}>
+      {currentUser !== null && (
+        <Table responsive className="text-center">
+          <thead>
+            <tr>
+              <th scope="col">Review Text</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  value={review.review}
+                  className="form-control"
+                  placeholder="Review description"
+                  type="longtext"
+                  onChange={(e) =>
+                    setReview({ ...review, review: e.target.value })
+                  }
+                />
+              </td>
+              <td>
                 <Rating
                   value={review.playerRating}
-                  defaultValue={0} 
+                  defaultValue={0}
                   precision={0.5}
-                  onChange={(event, newValue) => setReview({ ...review, playerRating: newValue })}
+                  onChange={(event, newValue) =>
+                    setReview({ ...review, playerRating: newValue })
+                  }
                 />
-                </td>
-                <td>
-                  <BsPlusCircleFill
-                    onClick={createReview}
-                    className="text-primary fs-1 text"
-                    title="Create new review"
-                  />
-                  <BsFillCheckCircleFill
-                    onClick={updateReview}
-                    title="Save current review selection"
-                    className="text-success fs-1 text"
-                  />
-                  <BsTrash3Fill
-                    onClick={() => setReview({ playerRating: 0, userId: currentUser?._id, playerName: playerName.playerName })}
-                    title="Clear current review selection"
-                    className="me-2 text-danger fs-1 text"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </div>
-        }
-      </Table >
-      <table className="table">
+              </td>
+              <td>
+                <BsPlusCircleFill
+                  onClick={createReview}
+                  className="text-primary fs-1 text"
+                  title="Create new review"
+                />
+                <BsFillCheckCircleFill
+                  onClick={updateReview}
+                  title="Save current review selection"
+                  className="text-success fs-1 text"
+                />
+                <BsTrash3Fill
+                  onClick={() =>
+                    setReview({
+                      playerRating: 0,
+                      userId: currentUser?._id,
+                      playerName: playerName.playerName,
+                    })
+                  }
+                  title="Clear current review selection"
+                  className="me-2 text-danger fs-1 text"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      )}
+      <Table responsive className="text-center">
         <thead>
           <tr>
             <th scope="col">User</th>
@@ -162,24 +180,24 @@ function PlayerReviews(props) {
               <td>{review.review}</td>
               <td>{review.playerRating}</td>
               <td>
-                (currentUser?._id === review.userId ? (
+                {currentUser?._id === review.userId && (
                   <button className="btn btn-warning me-2">
-                  <BsPencil onClick={() => selectReview(review)} />
+                    <BsPencil onClick={() => selectReview(review)} />
                   </button>
-                ) : null)
-                ((currentUser?._id === review.userId) || (currentUser.role === "ADMIN") ? (
+                )}
+                {(currentUser?._id === review.userId ||
+                  currentUser.role === "ADMIN") && (
                   <button className="btn btn-danger me-2">
-                  <BsTrash3Fill onClick={() => deleteReview(review)} />
+                    <BsTrash3Fill onClick={() => deleteReview(review)} />
                   </button>
-                ))
+                )}
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
-    </div >
-  )
-
+      </Table>
+    </div>
+  );
 }
 
 export default PlayerReviews;
