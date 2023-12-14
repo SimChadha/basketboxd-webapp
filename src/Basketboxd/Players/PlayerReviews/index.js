@@ -26,6 +26,7 @@ function PlayerReviews(props) {
     playerRating: 0,
     userId: currentUser?._id,
     playerName: playerName,
+    review: "",
   });
 
   useEffect(() => {
@@ -165,6 +166,7 @@ function PlayerReviews(props) {
                       playerRating: 0,
                       userId: currentUser?._id,
                       playerName: playerName,
+                      review: "",
                     })
                   }
                   title="Clear current review selection"
