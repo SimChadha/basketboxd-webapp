@@ -97,13 +97,13 @@ function PlayerReviews(props) {
           const userId = playerReviews[reviewIndex].userId
           idToUsernameMap[`${userId}`] = (await userClient.findUserById(userId)).username;
         });
+        newReviewHandler(findAverage(playerReviews));
       } catch (error) {
         console.error("Error fetching player reviews:", error);
       }
     };
 
     fetchReviews();
-    newReviewHandler(findAverage(playerReviews));
   }, [playerName]);
 
   return (
