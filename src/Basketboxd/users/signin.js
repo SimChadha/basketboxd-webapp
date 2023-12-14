@@ -15,12 +15,16 @@ function Signin() {
     navigate("/account");
   };
   return (
-    <div>
-      <h1>Signin</h1>
-      <input value={credentials.username} onChange={(e) => setCredentials({...credentials, username: e.target.value})}/>
-      <br/>
-      <input type='password' value={credentials.password} onChange={(e) => setCredentials({...credentials, password: e.target.value})}/>
-      <button onClick={signin}> Signin </button>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-12 w-50">
+          <h1>Signin</h1>
+          <input className="form-control" placeholder="Username" value={credentials.username} onChange={(e) => setCredentials({ ...credentials, username: e.target.value })} />
+          <br />
+          <input className="form-control" placeholder="Password" type='password' value={credentials.password} onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+          <button className="btn btn-primary" onClick={signin}> Signin </button>
+        </div>
+      </div>
     </div>
   );
 }
