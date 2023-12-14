@@ -28,7 +28,26 @@ function PlayerReviews(props) {
     playerName: playerName,
   });
 
-  function findAverage(reviews) {
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const reviews = await client.findReviewsByPlayerName(
+          playerName
+        );
+        setPlayerReviews(reviews);
+
+        // Calculate and send the average rating
+        const averageRating = calculateAverageRating(reviews);
+        newReviewHandler(averageRating);
+      } catch (error) {
+        console.error("Error fetching player reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  }, [playerName, newReviewHandler, currentUser]);
+
+  const calculateAverageRating = (reviews) => {
     if (reviews.length === 0) {
       return null;
     }
@@ -40,7 +59,7 @@ function PlayerReviews(props) {
     const averageRating = totalRating / reviews.length;
 
     return averageRating;
-  }
+  };
 
   const createReview = async () => {
     try {
@@ -49,7 +68,10 @@ function PlayerReviews(props) {
         playerName: playerName,
       });
       setPlayerReviews([newReview, ...playerReviews]);
-      newReviewHandler(findAverage(playerReviews));
+
+      // Calculate and send the updated average rating
+      const averageRating = calculateAverageRating([newReview, ...playerReviews]);
+      newReviewHandler(averageRating);
     } catch (err) {
       console.log(err);
     }
@@ -63,43 +85,35 @@ function PlayerReviews(props) {
       console.log(err);
     }
   };
+
   const updateReview = async () => {
     try {
       const status = await client.updateReview(review);
       setPlayerReviews(
         playerReviews.map((r) => (r._id === review._id ? review : r))
       );
-      newReviewHandler(findAverage(playerReviews));
+
+      // Calculate and send the updated average rating
+      const averageRating = calculateAverageRating(playerReviews);
+      newReviewHandler(averageRating);
     } catch (err) {
       console.log(err);
     }
   };
+
   const deleteReview = async (review) => {
     try {
       await client.deleteReview(review);
       setPlayerReviews(playerReviews.filter((r) => r._id !== review._id));
-      newReviewHandler(findAverage(playerReviews));
+
+      // Calculate and send the updated average rating
+      const averageRating = calculateAverageRating(playerReviews);
+      newReviewHandler(averageRating);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const reviews = await client.findReviewsByPlayerName(
-          playerName
-        );
-        setPlayerReviews(reviews);
-        newReviewHandler(findAverage(reviews));
-      } catch (error) {
-        console.error("Error fetching player reviews:", error);
-      }
-    };
-
-    fetchReviews();
-  }, [playerName]);
-
+  
   return (
     <div className="row justify-content-center" style={{ marginTop: "12px" }}>
       {currentUser !== null && (
@@ -201,4 +215,4 @@ function PlayerReviews(props) {
   );
 }
 
-export default PlayerReviews;
+export default PlayerReviews
