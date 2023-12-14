@@ -24,7 +24,7 @@ function Basketboxd() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/account" element={<Account />} />
-            <Route path="/account/:username" element={<UserProfile />} />
+            <Route path="/account/:userId" element={<UserProfile />} />
             <Route path="/search/*" element={<Search />} />
             <Route path="/admin/users" element={<UserTable />} />
             <Route path="/players/:playerName" element={<Players />} />

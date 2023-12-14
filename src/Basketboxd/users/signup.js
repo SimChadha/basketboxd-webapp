@@ -29,7 +29,7 @@ function Signup() {
   };
 
   return (
-    <div className="container w-50">
+    <div className="container">
       <div className="row justify-content-center">
         <div className="col-12">
           <h1>Signup</h1>

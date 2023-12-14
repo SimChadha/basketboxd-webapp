@@ -188,14 +188,14 @@ function PlayerReviews(props) {
             <th scope="col">User</th>
             <th scope="col">Review</th>
             <th scope="col">Rating</th>
-            {(currentUser?.role === "ADMIN") && <th scope="col">Actions</th>}
+            {(currentUser !== null) && <th scope="col">Actions</th>}
           </tr>
         </thead>
         <tbody>
           {playerReviews.map((review) => (
             <tr key={review._id}>
               <td>
-                <Link to={`/account/${idToUsernameMap[review.userId]}`}>
+                <Link to={`/account/${review.userId}`}>
                   {review.userId}
                 </Link>
               </td>

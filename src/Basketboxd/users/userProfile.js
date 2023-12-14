@@ -4,15 +4,16 @@ import * as client from './client';
 import * as reviewClient from '../reviews/client';
 
 const UserProfile = () => {
-  const { username } = useParams();
+  const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [reviews, setReviews] = useState([]);
   const fetchUser = async () => {
-    const userFromClient = await client.findUserByUsername(username);
+    const userFromClient = await client.findUserById(userId);
     setUser(userFromClient);
   };
   const fetchReviews = async () => {
-    const reviewsFromClient = await reviewClient.findReviewsByUsername(username);
+    console.log("USERID: ", userId)
+    const reviewsFromClient = await reviewClient.findReviewsByUserId(userId);
     setReviews(reviewsFromClient);
   };
 
