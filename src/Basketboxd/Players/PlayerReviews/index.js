@@ -113,16 +113,7 @@ function PlayerReviews(props) {
       console.log(err);
     }
   };
-
-  const getUsername = async (userId) => {
-    try {
-      const response = await userClient.findUserById(userId);
-      return response.username;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  
   return (
     <div className="row justify-content-center" style={{ marginTop: "12px" }}>
       {currentUser !== null && (
@@ -198,7 +189,7 @@ function PlayerReviews(props) {
             <tr key={review._id}>
               <td>
                 <Link to={`/account/${review.userId}`}>
-                  {getUsername(review.userId)}
+                  {review.userId}
                 </Link>
               </td>
               <td>{review.review}</td>
