@@ -13,8 +13,8 @@ function Home() {
 
   return (
     <div>
-        (account !== null && (
-          <h3>Welcome {currentUser.username}!</h3>
+        ({account} !== null && (
+          <h3>Welcome {currentUser?.username}!</h3>
         ))
         <h1>Top Players for 2022-2023</h1>
         <TopPlayers />
