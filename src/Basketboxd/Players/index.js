@@ -117,7 +117,7 @@ function Players() {
                   {avg !== null ? (
                     <>
                     Average Rating <br/>
-                    <Rating name="read-only" value={avg} readOnly />
+                    <Rating name="read-only" value={avg} precision={0.5} readOnly />
                     </>
                   ) : null}
                   </p>
