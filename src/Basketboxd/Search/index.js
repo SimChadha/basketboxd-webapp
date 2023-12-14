@@ -72,7 +72,7 @@ function Search() {
         {players.map((player) => (
           <div className="card" key={player.player_name + player.team} onClick={() => handlePlayerClick(player.player_name)}
           style={{ backgroundColor: teamColors(player.team).background, color: teamColors(player.team).text, margin: '5px'}}>
-            <img src={`../../logos/${teamColors(player.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+            <img src={`../../logos/${teamColors(player.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
             <div className="card-body">
               <p className="card-text">

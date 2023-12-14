@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import teamColors from "../teamColors";
 import PlayerReviews from "./PlayerReviews";
+import Rating from '@mui/material/Rating';
+
 function Players() {
   const { playerName } = useParams();
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
@@ -11,6 +13,7 @@ function Players() {
 
   const [playerStats, setPlayerStats] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
+  const [avg, setAvg] = useState();
 
   const findPlayerStats = async () => {
     const response = await axios.get(playerStatsURL);
@@ -46,8 +49,6 @@ function Players() {
 
   const careerAverages = calculateCareerAverages();
 
-  const getTeamColors = teamColors();
-
   return (
     <div className="container">
       <h1 className="text-center">{playerName}</h1>
@@ -68,7 +69,7 @@ function Players() {
             {filterStatsByYear().map((seasonStat) => (
               <div key={seasonStat.season + seasonStat.team} className="card"
               style={{ backgroundColor: teamColors(seasonStat.team).background, color: teamColors(seasonStat.team).text}}>
-                <img src={`../../logos/${teamColors(seasonStat.team).logo}`} class="card-img-top mx-auto d-block" alt="..."
+                <img src={`../../logos/${teamColors(seasonStat.team).logo}`} className="card-img-top mx-auto d-block" alt="..."
             style={{ width: '75px', height: '75px' }}></img>
                 <div className="card-body">
                   <p className="card-text">
@@ -98,7 +99,10 @@ function Players() {
                   PTS {careerAverages.PTS}<br />
                   TRB {careerAverages.TRB}<br />
                   AST {careerAverages.AST}<br />
-                  TOV {careerAverages.TOV}
+                  TOV {careerAverages.TOV}<br /><br/>
+                  {avg !== null ? (
+                    <Rating name="read-only" value={avg} readOnly />
+                  ) : null}
                   </p>
                 </div>
               </div>
@@ -106,7 +110,7 @@ function Players() {
       </div>
 
       <div className="row justify-content-center">
-        <PlayerReviews playerName={playerName}/>
+        <PlayerReviews playerName={playerName} newReviewHandler={(newAvg) => setAvg(newAvg)} />
       </div>
     </div>
   );
