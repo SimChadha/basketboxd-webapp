@@ -21,7 +21,7 @@ function Header() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" className="me-2" />
             <Navbar.Brand className="navbar navbar-light bg-none ms-4">
                 <Nav.Link
-                    href="/"
+                    href="/#"
                     style={{ fontSize: '30px', color: "white", fontFamily: 'Trebuchet MS, sans-serif' }}
                 >
                     Basketboxd🏀

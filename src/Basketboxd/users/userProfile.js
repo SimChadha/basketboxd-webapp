@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as client from './client';
 import * as reviewClient from '../reviews/client';
 
@@ -44,7 +44,9 @@ const UserProfile = () => {
           <div key={review._id} className="list-group mb-3 px-5 mx-5">
             <div className="list-group-item">
               <h4 className="list-group-item-heading">Player Name</h4>
-              <p className="list-group-item-text">{review.playerName}</p>
+              <p className="list-group-item-text">
+                <Link to={`/players/${review.playerName}`}>{review.playerName}</Link>
+              </p>
             </div>
             <div className="list-group-item">
               <h4 className="list-group-item-heading">Player Rating</h4>
