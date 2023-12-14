@@ -46,7 +46,7 @@ function PlayerReviews(props) {
     try {
       const newReview = await client.createReview({
         ...review,
-        playerName: playerName.playerName,
+        playerName: playerName,
       });
       setPlayerReviews([newReview, ...playerReviews]);
       newReviewHandler(findAverage(playerReviews));
@@ -89,13 +89,14 @@ function PlayerReviews(props) {
     const fetchReviews = async () => {
       try {
         const reviews = await client.findReviewsByPlayerName(
-          playerName.playerName
+          playerName
         );
         setPlayerReviews(reviews);
         console.log("Player reviews:", playerReviews)
         Object.keys(playerReviews).forEach(async (reviewIndex) => {
           const userId = playerReviews[reviewIndex].userId
           idToUsernameMap[`${userId}`] = (await userClient.findUserById(userId)).username;
+          console.log("UserId: " + userId + " Username: " + idToUsernameMap[`${userId}`])
         });
         newReviewHandler(findAverage(playerReviews));
       } catch (error) {
@@ -156,7 +157,7 @@ function PlayerReviews(props) {
                     setReview({
                       playerRating: 0,
                       userId: currentUser?._id,
-                      playerName: playerName.playerName,
+                      playerName: playerName,
                     })
                   }
                   title="Clear current review selection"
@@ -173,7 +174,7 @@ function PlayerReviews(props) {
             <th scope="col">User</th>
             <th scope="col">Review</th>
             <th scope="col">Rating</th>
-            <th scope="col">Actions</th>
+            {(currentUser?.role === "ADMIN") && <th scope="col">Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -193,7 +194,7 @@ function PlayerReviews(props) {
                   </button>
                 )}
                 {(currentUser?._id === review.userId ||
-                  currentUser.role === "ADMIN") && (
+                  currentUser?.role === "ADMIN") && (
                   <button className="btn btn-danger me-2">
                     <BsTrash3Fill onClick={() => deleteReview(review)} />
                   </button>
