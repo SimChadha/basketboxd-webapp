@@ -4,20 +4,23 @@ import axios from "axios";
 import teamColors from "../teamColors";
 import PlayerReviews from "./PlayerReviews";
 import Rating from '@mui/material/Rating';
+import { RotatingSquare } from "react-loader-spinner";
 
 function Players() {
   const { playerName } = useParams();
   const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
 
   const playerStatsURL = `${NBA_STATS_API}/playerdata/name/${playerName}`;
-
+  const [queryLoaded, setQueryLoaded] = useState(false);
   const [playerStats, setPlayerStats] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [avg, setAvg] = useState();
 
   const findPlayerStats = async () => {
+    setQueryLoaded(false);
     const response = await axios.get(playerStatsURL);
     setPlayerStats(response.data.results);
+    setQueryLoaded(true);
   };
   useEffect(() => {
     findPlayerStats();
@@ -52,6 +55,17 @@ function Players() {
   return (
     <div className="container">
       <h1 className="text-center">{playerName}</h1>
+      <div className="row justify-content-center">
+        <RotatingSquare
+          height="100"
+          width="100"
+          color="#ffffff"
+          ariaLabel="rotating-square-loading"
+          wrapperClass="justify-content-center"
+          strokeWidth="4"
+          visible={!queryLoaded}
+        />
+      </div>
       <div className="row justify-content-center">
         <div className="col-md-4">
           <label htmlFor="yearSelector"><h2>Stats for: </h2></label>

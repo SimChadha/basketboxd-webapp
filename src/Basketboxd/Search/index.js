@@ -6,13 +6,11 @@ import teamColors from "../teamColors";
 import { RotatingSquare } from 'react-loader-spinner'
 
 function Search() {
-  const NBA_STATS_API = "https://nba-stats-db.herokuapp.com/api";
   const [searchParams, setSearchParams] = useSearchParams();
   const playerName = searchParams.get("player");
   const year = searchParams.get("year");
   const [players, setPlayers] = useState([]);
   const [queryLoaded, setQueryLoaded] = useState(false);
-  const playersBySeasonURL = `${NBA_STATS_API}/playerdata/season/${year}`;
 
   const navigate = useNavigate();
 

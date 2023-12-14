@@ -43,7 +43,7 @@ function teamColors(team) {
         case "NYK":
           return {background: '#006BB6', text: '#F58426', logo: team+'.svg'};
         case "OKC":
-          return {background: '#007ac1', text: '#ef3b24', logo: team+'.svg'};
+          return {background: '#0169a6', text: '#ef3b24', logo: team+'.svg'};
         case "ORL":
           return {background: '#C4ced4', text: '#0077c0', logo: team+'.svg'};
         case "PHI":
@@ -53,7 +53,7 @@ function teamColors(team) {
         case "POR":
           return {background: '#E03A3E', text: '#000000', logo: team+'.svg'};
         case "SAC":
-          return {background: '#5a2d81', text: '#63727A', logo: team+'.svg'};
+          return {background: '#5a2d81', text: '#FFFFFF', logo: team+'.svg'};
         case "SAS":
           return {background: '#c4ced4', text: '#000000', logo: team+'.svg'};
         case "SEA":

@@ -37,10 +37,10 @@ function Account() {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-12">
-          <h1>Account</h1>
-          {account && (
+          {account !== null && account !== 403 && account !== undefined ? (
             <>
               <div>
+                <h1>Account</h1>
                 <input
                   value={account.firstName}
                   placeholder="First Name"
@@ -94,7 +94,16 @@ function Account() {
                 </Link>
               }
             </>
-          )}
+          ) : 
+          <>
+          <h1 className="text-danger">Access Denied</h1>
+          <h3 className="text-danger">You must be logged in to view your account page.</h3>
+          <Link to="/signup/">
+                  <h3>
+                    Click here to signup
+                  </h3>
+          </Link>
+          </>}
         </div>
       </div>
     </div>
